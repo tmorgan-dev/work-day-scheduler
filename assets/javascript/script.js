@@ -1,16 +1,47 @@
+// GIVEN I am using a daily planner to create a schedule
+// WHEN I open the planner
+// THEN the current day is displayed at the top of the calendar
+// WHEN I scroll down
+// THEN I am presented with time blocks for standard business hours of 9am to 5pm
+// WHEN I view the time blocks for that day
+// THEN each time block is color-coded to indicate whether it is in the past, present, or future
+// WHEN I click into a time block
+// THEN I can enter an event
+// WHEN I click the save button for that time block
+// THEN the text for that event is saved in local storage
+// WHEN I refresh the page
+// THEN the saved events persist
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
-var timeDisplayEl = $('#currentDay');
+var dayDisplayEl = $('#currentDay');
+var currentTime = dayjs().format('MMM DD, YYYY [at] hh:mm:ss a')
+
+var timeBlock = $('#hour-11');
+
+var currentHour = dayjs().hour()
+var elevenAm = parseInt(dayjs().hour(11).format('hh'))
+console.log(typeof(currentHour))
+console.log(typeof(elevenAm))
 
 //function to display the current day
-function displayTime() {
+function displayDay() {
   var currentDay = dayjs().format('dddd');
-  timeDisplayEl.text(currentDay);
+  dayDisplayEl.text(currentDay);
 }
+displayDay()
 
-displayTime()
+if (currentHour < (elevenAm)) {
+  timeBlock.addClass('past');
+} else if (currentHour == (elevenAm)) {
+  timeBlock.addClass('present');
+}   else {
+    timeBlock.removeClass('future')
+    timeBlock.addClass('test');
+    console.log('future')
+}
 
 $(function () {
   // TODO: Add a listener for click events on the save button. This code should
